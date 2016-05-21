@@ -1,0 +1,18 @@
+common:
+    enabled: true
+items:
+    user-user:
+      username: user
+      email: user@user.com
+      plainPassword: user
+      roles: [ 'ROLE_USER' ]
+    user-james:
+      username: james
+      email: james@user.com
+      plainPassword: james
+      roles: [ 'ROLE_USER' ]
+    user-mario:
+      username: mario
+      email: mario@user.com
+      plainPassword: mario
+      roles: [ 'ROLE_USER' ]

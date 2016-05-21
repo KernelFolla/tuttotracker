@@ -1,0 +1,8 @@
+core_default_api:
+    name_prefix:  api_1.core.
+    type:     rest
+    resource: App\CoreBundle\Controller\Api\DefaultController
+user_user_api:
+    name_prefix:  api_1.core.
+    type:     rest
+    resource: App\UserBundle\Controller\Api\UserController

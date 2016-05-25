@@ -31,7 +31,9 @@ framework:
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
-    assets: ~
+    assets:
+        packages:
+            webpack: ~
 
 # Twig Configuration
 twig:
@@ -60,7 +62,7 @@ fos_rest:
     routing_loader:
         default_format: json
     view:
-        view_response_listener: force
+        view_response_listener: true
     disable_csrf_role : IS_AUTHENTICATED_ANONYMOUSLY
 
 jms_serializer:

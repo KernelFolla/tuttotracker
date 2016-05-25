@@ -1,0 +1,4 @@
+app_front_core:
+    resource: "@AppCoreBundle/Controller/Front/"
+    type:     annotation
+    prefix:   /

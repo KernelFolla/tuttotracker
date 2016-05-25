@@ -35,7 +35,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-//            //app
+            //app
             new App\TrackerBundle\AppTrackerBundle(),
             new App\UserBundle\AppUserBundle(),
             new App\CoreBundle\AppCoreBundle(),

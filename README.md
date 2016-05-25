@@ -2,7 +2,10 @@ tuttotracker
 ============
 
 A Symfony project created on May 20, 2016, 10:30 pm.
+this is a test project using symfony3 behat3 react redux react-redux router and webpack
+the purpose of this project is purely ludic
 
+enjoy!
 
 how to run it
 =============

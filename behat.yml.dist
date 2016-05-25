@@ -53,3 +53,4 @@ default:
                       debug: true
                 - App\UserBundle\Features\Context\UserContext
                 - App\TrackerBundle\Features\Context\ClientContext
+                - App\TrackerBundle\Features\Context\ActivityContext

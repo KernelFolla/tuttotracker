@@ -3,20 +3,18 @@
 namespace App\TrackerBundle\Repository;
 
 use App\Common\Doctrine\EntityRepository;
-use App\TrackerBundle\Entity\Activity;
-use App\UserBundle\Entity\User;
 use App\UserBundle\Entity\UserDetail;
 
-class ClientRepository extends EntityRepository
+class ActivityRepository extends EntityRepository
 {
-    const ALIAS = 'client';
+    const ALIAS = 'activity';
 
     static protected $joinColumns = [
-        'activities'       => Activity::class,
+        'client' => Client::class,
         'createdByUser' => User::class,
     ];
     static protected $searchFields = [
-        'name'
+        'name',
     ];
     static protected $checkFields = ['id', 'name', 'createdByUser'];
 }

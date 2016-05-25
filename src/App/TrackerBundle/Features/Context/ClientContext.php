@@ -44,4 +44,26 @@ class ClientContext extends DefaultContext
             SharedData::$ids['clients'][$client->getName()] = $client->getId();
         }
     }
+
+    /**
+     * @Given the user :username has :number more fake clients
+     */
+    public function thereAreMoreClients($username, $number)
+    {
+        $entityManager = $this->getEntityManager();
+        /** @var UserRepository $userRepo */
+        $userRepo = $entityManager->getRepository(User::class);
+        $user = $userRepo->getOne(compact('username'));
+        $faker = \Faker\Factory::create();
+        for ($i = 0; $i < $number; $i++) {
+            $client = new Client();
+            $client->setCreatedBy($user);
+            $client->setCreatedByUser($user);
+            $client->setName($faker->name);
+            $entityManager->persist($client);
+            $ret[] = $client;
+        }
+
+        $entityManager->flush();
+    }
 }

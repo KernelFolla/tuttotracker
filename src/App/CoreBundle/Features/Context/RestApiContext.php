@@ -77,7 +77,7 @@ class RestApiContext implements Context
         $this->client = new Client(
             [
                 'base_uri' => $settings['base_url'],
-                'timeout' => 2.0,
+                'timeout' => 20.0,
             ]
         );
         $this->debug = $settings['debug'];
@@ -271,7 +271,13 @@ class RestApiContext implements Context
     public function iSendARequestWithJsonTableNode($method, $url, TableNode $body)
     {
         $url = $this->prepareUrl($url);
-        $body = \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\json_encode($this->solveDots($body->getRowsHash())));
+        $body = array_map(
+            function ($str) {
+                return $this->render($str);
+            },
+            $body->getRowsHash()
+        );
+        $body = \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\json_encode($this->solveDots($body)));
         $options['Content-Type'] = 'application/json';
         $options = array_merge($this->headers, $options);
         $this->request = new Request($method, $url, $options, $body);
@@ -370,20 +376,29 @@ class RestApiContext implements Context
                     "Can not convert expected to json:\n".$this->replacePlaceHolder($jsonString->getRaw())
                 );
             }
-            Assertions::assertGreaterThanOrEqual(count($expected), count($actual));
-            foreach ($expected as $key => $needle) {
-                Assertions::assertArrayHasKey($key, $actual);
-                if (is_string($expected[$key])) {
-                    Assertions::assertRegExp($this->patternize($expected[$key]), (string)$actual[$key]);
-                } else {
-                    Assertions::assertEquals($expected[$key], $actual[$key]);
-                }
-            }
+            $this->recursiveEquals($expected, $actual);
         } catch (\RuntimeException $e) {
             if ($this->debug) {
                 echo "original: ".(isset($actual) ? json_encode($actual, JSON_PRETTY_PRINT) : $original);
             }
             throw $e;
+        }
+    }
+
+    private function recursiveEquals($expected, $actual)
+    {
+        Assertions::assertGreaterThanOrEqual(count($expected), count($actual));
+        foreach ($expected as $key => $needle) {
+            Assertions::assertArrayHasKey($key, $actual);
+            $x = $expected[$key];
+            $a = $actual[$key];
+            if (is_string($expected[$key]) && strpos($x, '*') !== false) {
+                Assertions::assertRegExp($this->patternize($x), (string)$a);
+            } elseif (is_array($x) && is_array($a)) {
+                $this->recursiveEquals($x, $a);
+            } else {
+                Assertions::assertEquals($expected[$key], $actual[$key]);
+            }
         }
     }
 
@@ -593,7 +608,7 @@ class RestApiContext implements Context
 
     protected function render($url)
     {
-        if (strpos($url, '{') === false) {
+        if (strpos($url, '{{') === false) {
             return $url;
         }
         $rendered = $this->getTwig()->render(

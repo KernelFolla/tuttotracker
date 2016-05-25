@@ -41,6 +41,7 @@ class UserController extends FOSRestController
      * Creates a new Account
      *
      * @Doc\ApiDoc(
+     *   section = "User",
      *  input = "FOS\UserBundle\Form\Type\RegistrationType",
      *  output = "App\UserBundle\Entity\User",
      *  statusCodes={

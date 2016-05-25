@@ -47,8 +47,6 @@
         "behat/mink-extension":         "*",
         "behat/mink-goutte-driver":     "*",
         "behat/mink-selenium2-driver":  "*",
-        "behat/web-api-extension":      "dev-master",
-        "deminy/behat-rest-testing":    "dev-master",
         "emuse/behat-html-formatter":   "dev-master",
         "doctrine/data-fixtures": "^1.1",
         "doctrine/doctrine-fixtures-bundle": "^2.3"

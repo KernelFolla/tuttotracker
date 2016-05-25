@@ -26,6 +26,8 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
 class RestApiContext implements Context
 {
     protected $debug = true;
+    private $twig;
+
     /**
      * @var string
      */
@@ -92,9 +94,9 @@ class RestApiContext implements Context
     public function iGetAJwtToken($username, $password)
     {
         $params = [
-                    '_username' => $username,
-                    '_password' => $password,
-                ];
+            '_username' => $username,
+            '_password' => $password,
+        ];
         $body = \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\json_encode($params));
         $options['Content-Type'] = 'application/json';
         $this->request = new Request('POST', '/api/login_check', $options, $body);
@@ -271,6 +273,7 @@ class RestApiContext implements Context
         $url = $this->prepareUrl($url);
         $body = \GuzzleHttp\Psr7\stream_for(\GuzzleHttp\json_encode($this->solveDots($body->getRowsHash())));
         $options['Content-Type'] = 'application/json';
+        $options = array_merge($this->headers, $options);
         $this->request = new Request($method, $url, $options, $body);
         $this->sendRequest();
     }
@@ -355,21 +358,38 @@ class RestApiContext implements Context
      */
     public function theResponseShouldContainJson(PyStringNode $jsonString)
     {
-        $etalon = json_decode($this->replacePlaceHolder($jsonString->getRaw()), true);
-        Assertions::assertNotEmpty((string)$this->response->getBody());
-        Assertions::assertJson((string)$this->response->getBody());
+        try {
+            $expected = json_decode($this->replacePlaceHolder($jsonString->getRaw()), true);
+            $original = (string)$this->response->getBody();
+            Assertions::assertNotEmpty($original);
+            Assertions::assertJson($original);
 
-        $actual = json_decode($this->response->getBody(), true);
-        if (null === $etalon) {
-            throw new \RuntimeException(
-                "Can not convert etalon to json:\n".$this->replacePlaceHolder($jsonString->getRaw())
-            );
+            $actual = json_decode($original, true);
+            if (null === $expected) {
+                throw new \RuntimeException(
+                    "Can not convert expected to json:\n".$this->replacePlaceHolder($jsonString->getRaw())
+                );
+            }
+            Assertions::assertGreaterThanOrEqual(count($expected), count($actual));
+            foreach ($expected as $key => $needle) {
+                Assertions::assertArrayHasKey($key, $actual);
+                if (is_string($expected[$key])) {
+                    Assertions::assertRegExp($this->patternize($expected[$key]), (string)$actual[$key]);
+                } else {
+                    Assertions::assertEquals($expected[$key], $actual[$key]);
+                }
+            }
+        } catch (\RuntimeException $e) {
+            if ($this->debug) {
+                echo "original: ".(isset($actual) ? json_encode($actual, JSON_PRETTY_PRINT) : $original);
+            }
+            throw $e;
         }
-        Assertions::assertGreaterThanOrEqual(count($etalon), count($actual));
-        foreach ($etalon as $key => $needle) {
-            Assertions::assertArrayHasKey($key, $actual);
-            Assertions::assertEquals($etalon[$key], $actual[$key]);
-        }
+    }
+
+    private function patternize($pattern)
+    {
+        return sprintf("|%s|", str_replace('\\*', '.*', preg_quote($pattern, '/')));
     }
 
     /**
@@ -409,7 +429,7 @@ class RestApiContext implements Context
      */
     private function prepareUrl($url)
     {
-        return ltrim($this->replacePlaceHolder($url), '/');
+        return ltrim($this->replacePlaceHolder($this->render($url)), '/');
     }
 
     /**
@@ -568,5 +588,28 @@ class RestApiContext implements Context
         }
 
         return $this->client;
+    }
+
+
+    protected function render($url)
+    {
+        if (strpos($url, '{') === false) {
+            return $url;
+        }
+        $rendered = $this->getTwig()->render(
+            $url,
+            array('ids' => SharedData::$ids)
+        );
+
+        return $rendered;
+    }
+
+    protected function getTwig()
+    {
+        if (!isset($this->twig)) {
+            $this->twig = new \Twig_Environment(new \Twig_Loader_String());
+        }
+
+        return $this->twig;
     }
 }

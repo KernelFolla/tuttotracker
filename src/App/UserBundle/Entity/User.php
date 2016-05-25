@@ -11,4 +11,5 @@ use JMS\Serializer\Annotation as Serializer;
  */
 class User extends AbstractUser
 {
+    
 }

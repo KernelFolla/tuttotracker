@@ -1,0 +1,19 @@
+common:
+  createdBy: user
+  createdByUser: "@reference[user-user]"
+items:
+  activity-1:
+    name: Meeting
+    startsAt: "@datetime[yesterday 10:00]"
+    endsAt: "@datetime[yesterday 11:00]"
+    client: "@reference[client-microsoft]"
+  activity-2:
+    name: Meeting
+    startsAt: "@datetime[yesterday 12:00]"
+    endsAt: "@datetime[yesterday 13:00]"
+    client: "@reference[client-apple]"
+  activity-3:
+    name: Meeting
+    startsAt: "@datetime[yesterday 14:00]"
+    endsAt: "@datetime[yesterday 15:00]"
+    client: "@reference[client-google]"

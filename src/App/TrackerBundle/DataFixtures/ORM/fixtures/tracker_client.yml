@@ -1,0 +1,10 @@
+common:
+  createdBy: user
+  createdByUser: "@reference[user-user]"
+items:
+  client-microsoft:
+    name: Microsoft
+  client-google:
+    name: Google
+  client-apple:
+    name: Apple

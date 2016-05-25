@@ -43,3 +43,13 @@ default:
                       base_url: http://127.0.0.1:8000/app_test.php/
                       debug: true
                 - App\UserBundle\Features\Context\UserContext
+        app_tracker_suite:
+            type: symfony_bundle
+            bundle: 'AppTrackerBundle'
+            contexts:
+                - App\CoreBundle\Features\Context\RestApiContext:
+                    settings:
+                      base_url: http://127.0.0.1:8000/app_test.php/
+                      debug: true
+                - App\UserBundle\Features\Context\UserContext
+                - App\TrackerBundle\Features\Context\ClientContext

@@ -34,7 +34,7 @@ class UserController extends FOSRestController
      */
     public function getCurrentAction()
     {
-        return $this->getUser();
+        return View::create($this->getUser(), Codes::HTTP_OK);
     }
 
     /**
@@ -74,21 +74,16 @@ class UserController extends FOSRestController
         $form = $formFactory->createForm();
         $form->setData($user);
 
-        $jsonData = json_decode($request->getContent(), true); // "true" to get an associative array
+        $form->submit($request->request->all());
+        if ($form->isValid()) {
+            $event = new FormEvent($form, $request);
+            $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-        if ('POST' === $request->getMethod()) {
-            $form->submit($jsonData);
-            if ($form->isValid()) {
-                $event = new FormEvent($form, $request);
-                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
+            $userManager->updateUser($user);
 
-                $userManager->updateUser($user);
-
-                return View::create(null, 201);
-            }
+            return View::create($user, Codes::HTTP_CREATED);
         }
 
-        $view = View::create($form, 400);
-        return $this->get('fos_rest.view_handler')->handle($view);
+        return View::create($form, Codes::HTTP_BAD_REQUEST);
     }
 }

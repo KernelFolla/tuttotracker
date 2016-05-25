@@ -1,5 +1,7 @@
 parameters:
     app.user.class: App\UserBundle\Entity\User
+    app.tracker_client.class: App\TrackerBundle\Entity\Client
+    app.tracker_activity.class: App\TrackerBundle\Entity\Activity
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -22,7 +24,10 @@ doctrine:
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         resolve_target_entities:
-            app_user:     %app.user.class%
+            kf_kit_user:            %app.user.class%
+            app_user:               %app.user.class%
+            app_tracker_client:     %app.tracker_client.class%
+            app_tracker_activity:   %app.tracker_activity.class%
 
 stof_doctrine_extensions:
     default_locale: en

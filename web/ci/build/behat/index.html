@@ -61,14 +61,14 @@
             <div class="canvas-holder">
                 <canvas id="chart-scenarios" width="300" height="300"/>
             </div>
-            0 scenarios failed of 7
+            0 scenarios failed of 5
             scenarios
         </div>
         <div class="col-sm-4">
             <div class="canvas-holder">
                 <canvas id="chart-steps" width="300" height="300"/>
             </div>
-            0 steps failed of 36
+            0 steps failed of 30
         </div>
     </div>
     <hr>
@@ -91,6 +91,15 @@
                     <div class="row">
                 <div class="col-sm-12">
                     <h2>Suite: app_user_suite</h2>
+
+                    <div class="row">
+                                            </div>
+                </div>
+            </div>
+            <hr>
+                    <div class="row">
+                <div class="col-sm-12">
+                    <h2>Suite: app_tracker_suite</h2>
 
                     <div class="row">
                                                     <div class="col-sm-4 feature" data-id="feature-1">
@@ -126,7 +135,7 @@ I need to be able to signup and login</p>
             <hr>
             </div>
     <div id="scenario-overview" class="row">
-                                                        <div class="feature" data-id="feature-1">
+                                                                            <div class="feature" data-id="feature-1">
                     <div class="col-sm-4">
                         <div class="card passed">
                             <div class="header">
@@ -162,7 +171,7 @@ I need to be able to signup and login</p>
                                            href="#scenario-1-1"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-1">
-                                            Scenario: get current user as not logged
+                                            Scenario: get client with success
                                         </a>
 
                                         <div class="tags pull-right">
@@ -179,13 +188,32 @@ I need to be able to signup and login</p>
 | bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>When</b> I send a &quot;GET&quot; request to &quot;/api/v1/users/current&quot;
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{&quot;code&quot;:401,&quot;message&quot;:&quot;Invalid credentials&quot;}</p>
-                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users/current&#039;</p>
+                                                <b>And</b> there are the following clients:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| createdBy | name       |<br />
+| bar       | new client |</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>Given</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
+                                                                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
+  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response status code should be 401
+                                                <b>When</b> I send a &quot;GET&quot; request to &quot;/api/v1/clients/{{ids.clients[&#039;new client&#039;]}}&quot;
+                                                                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/clients/57&#039; \
+  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjQyNjM2NDQsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2NDE3NzI0NCJ9.kCxLmgn_-C_NP-Gkuhq0kRX0rrnVzQVdiCaCkRPJShrUrfXtEhoYFMdDUgeRCHTzYMkc_bupevriqgLpI6Cj70zz81SI-H5wQ-deVyAQOx-MG4sOZHnlYa5eoo1GrBJ63JzxkPzSdTLee04kNvQjCGexpJwkracNwYyTZfxJbAxn4hUvyWcjVqsPrvOXc98Pg0wefnSR2TZNgpeQKSbQWIggkvSz4QRwDaUgwYHJ7LQ-WQGzAqAWXGabdRM7IpCZ1QJKV7xL1LLNZRJd8b3hwgDGZfr06KTx8WddU3TtEyuRHChDAmwSHNaaQL6N1SW2lp_zT5_FfHxV1clPBMOcuu2EXy9F19K9xOzHdRxg2FMLJBVnO5MBFepbIpIC-Ewuj25JoUhjspMf8jpsO7NAA7rfqnfKUbhuXqUNbXZIBs2fIefjSLJGaCWgXVPLfwhz709TyFiGB88N6OgIA6hce9xrMs4fIoinOMFil5sCxSDwe7_PkYK-PY8SQ0Lc52nKLgbwX47D9raMbYuAzqfpQRyumur8TztyxukpHr_lP1f-YK4ep8wqRNY7BP_lfDn24-JOF4ZMWMtEexBnqwkybv1bD8l27zn9HsAFJ3GABxYVSHQ7-r5upbaCx7Q6S5oQl-n0B7hmLaF6Hxi8mb3S-oxegiO4VTpi22jjL1V7MBA&#039;</p>
+                                                                                                                                            </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>Then</b> the response should contain json:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
+&quot;id&quot;: &quot;*&quot;,<br />
+&quot;name&quot;: &quot;new client&quot;,<br />
+&quot;created_by&quot;: &quot;bar&quot;<br />
+}</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>And</b> the response status code should be 200
                                                                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                 </ul>
                                 </div>
@@ -197,7 +225,7 @@ I need to be able to signup and login</p>
                                            href="#scenario-1-2"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-2">
-                                            Scenario: retrieve an invalid token
+                                            Scenario: create new client with errors
                                         </a>
 
                                         <div class="tags pull-right">
@@ -214,33 +242,45 @@ I need to be able to signup and login</p>
 | bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>When</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
+                                                <b>And</b> there are the following clients:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| createdBy | name       |<br />
+| bar       | new client |</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>Given</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
                                                                                                                                                                                                                                                                                                         <br>
                                                     <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
   -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> I send a &quot;GET&quot; request to &quot;/api/v1/users/current&quot;
-                                                                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users/current&#039; \
-  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjM5Mzc2NzcsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2Mzg1MTI3NyJ9.oOWhBijECq3UCFJwdKsMVyVctU2RsKUljyY_0paOjTAxeD-mUgHMjO6FKoBCCn1VIJuCeGtK2LWMwtfEvndKJbTXaMt8nt9yztAgeg4ikbx-2egzmiTDkNaZx8L_rpx0Rx7rybaZzCiok5Jec3c2DWWZxh3EjjYocnJ5hwyUA11Xznwla5Q1YzRzMQI2-LsmpNehauPrRIyGRFmtUvwbawsafopEfN1FGcImFr0vHjck1GRVxSFN5-a07XiApLkefud-TdAcN12Crj_PnPJPmOVrJ6JKCBVM170Spc1n6xZesTlJSdVNfT6Dl1LzZSzO99qlGWCXOPMaDGisx9KRtwe49Nm12Xk2y58BWR-3WVWQiviyXL0kBTTIs6k2oKJg1lyDsrNNrAT_UOaKvSADxfITmcpoxAipFm5u1b_536CBGShCmq-EmMWvqfwU_Rq2-E5-TAG42FUEi6EP3v1-_SpTrpk18o8IH2HZ0FkcRqgoBVx6chzU69SGmJKVyOX52mwwNUZZhL4JGyxfohjf3MkLR7-NKpnjMmccfAchPt2_1uJpZctPM1zkrFhl70bIFOzzTVo7TjpMibfmqVDaZ_shpPS7eH0RCRNpxdfW5arCSmDbq-OPS5LDXGUAJocy5dGPT4q7ndadKw9HlwXTUy5gK_CiNQwKkgj6jGHCpZ4&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response status code should be 200
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Given</b> I send a &quot;POST&quot; request to &quot;/api/login_check&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| _username | bar |<br />
-| _password | foo |</p>
+                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/clients&quot; with json as table:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| test | foo |</p>
                                                                                                                                                                                                                                                         <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/clients&#039; \
+  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjQyNjM2NDUsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2NDE3NzI0NSJ9.iCGqN3VUeLBhQFw1iGaQMxlLnc8PZ120RrB89XOpHo0R5dETG33CgUeb8ryDfL7r3wsE5XxrazlKAwO8K6VRY9E1GxRJl0Kr46qTogHbG88-4qjxKPvQ8SNsAwMJk-DLO7JQC9RsVO8e41w8pjlj5DbF_uImEHY3LvKNqIEV0wy-TffhU5TErkMmZgUGZdo_EZxrUY8Zue0fsXvp1bx1vW5IweBhaTtYeBjcJXmhIFTjql1YTFycjsU4i9TsLqWjKOnTMJqjNKgAeY1lsldPju_jI3GjitF4Tujtk-PLgmCifnhXgbOXK9jMBGs0yIQGtS1xDXkbBMxaaG5gvH_4P60ZXL3ZU5Jl-YQROzRGPrVXaedJVu2LqtfRWfPODsfusg8pNmKHJEBsk53c7AzFAs1-cfsb0CBIm77CEJU1h5jYqNY176jHh89XxbWmB7Jrk0n550LdPE4ZiUBL2k0dDIoDp9an7NZq8aLahke5G8MDdj0dMSTdR5yxVO64zvo1M-jd0nMI3HnfnAm0Cy1LbK_RZGN0k5AtOJ42PTb6dmu6X8k9ilNJXfJvlQpAVB39K1chUM7yjeGTP95Bq9pVw1Z9m_ulI3uwgjg1F0etQz_yAZeyXluyCxWB1oTqkXglfWtAfzq0p7GLL6aDXA7xVb9h9ypy93Uspl-nQe2d1w0&#039; \
+  -H &#039;Content-Type: application/json&#039; -X POST -d &#039;{&quot;test&quot;:&quot;foo&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response should contain &quot;token&quot;
-                                                                                                                                                                                                                                                                                                                                                </li>
+                                                <b>Then</b> the response should contain json:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
+&quot;code&quot;: 400,<br />
+&quot;message&quot;: &quot;Validation Failed&quot;,<br />
+&quot;errors&quot;: {<br />
+    &quot;errors&quot;: [<br />
+        &quot;This form should not contain extra fields.&quot;<br />
+    ],<br />
+    &quot;children&quot;: {<br />
+        &quot;name&quot;: {<br />
+            &quot;errors&quot;: [<br />
+                &quot;This value should not be blank.&quot;<br />
+            ]<br />
+        }<br />
+    }<br />
+}<br />
+}</p>
+                                                                                                                                                                                                                                                                                                </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response status code should be 200
+                                                <b>And</b> the response status code should be 400
                                                                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                 </ul>
                                 </div>
@@ -252,7 +292,7 @@ I need to be able to signup and login</p>
                                            href="#scenario-1-3"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-3">
-                                            Scenario: retrieve a valid token
+                                            Scenario: create new client as duplicate
                                         </a>
 
                                         <div class="tags pull-right">
@@ -269,20 +309,43 @@ I need to be able to signup and login</p>
 | bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>Given</b> I send a &quot;POST&quot; request to &quot;/api/login_check&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| _username | bar   |<br />
-| _password | wrong |</p>
-                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;wrong&quot;}&#039;</p>
+                                                <b>And</b> there are the following clients:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| createdBy | name       |<br />
+| bar       | new client |</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>Given</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
+                                                                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
+  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response status code should be 401
-                                                                                                                                                                                                                                                                                                                                                </li>
+                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/clients&quot; with json as table:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| name | new client |</p>
+                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/clients&#039; \
+  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjQyNjM2NDYsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2NDE3NzI0NiJ9.V5NGJUaxkQY1W4ViuCKPnxkOdPqEpcrUqO-DHcbrCvXyyUiODfeLMvb3HXhvdN6hwimZNxBYSMK1SKzBdoZrkfwQV5GrQOdTcn0NmfJI2PtMc5lsQEdbZlLZlfZeT0AN5iSIzOBTGmeTnwfMyN1sTPHBPZ51MgK4tWhEnNnVPq_IwFdt1kG4CN_QVfwNSsQhJnaaeUxDLRTwXtmwq-5yoEv81cyu8FSOkRu8hM6I7XDp2CAcW3FleYzOKU0H8j6_9b1yj7A8ucW0piT-CZCIGkSj-qMtDzZZOlgqa4BEg28hRu0yh6ubw_Bx5VzISg93yWRdY7PUaf3BkvKVg7eEYi3tEYdEZNLvS-3YQr69hWUTRrh3qL7vCeD5oSSM0aAN7AbuWI01XBLpTT53vrx4A9GEK4PdQP-CXtCf4znDaosHae0wDx-fKP0_ueEnBW53S92DXyqDIJsqEGJBxUDj27GiMUXR0coWsktk6xsV1WHp8skDVEzId0JhWgqG9N9q5B__u6w5PK5l_fnxR1zrKgsjzIBmuJwnLT_Fildh0A3LpzIs0bqUxLHDWbO2WdrUnD7vH-RyyvWqIGPd7rkysrBddbKCOqB4GhDYFAlP6mX3RNFNqADhErmpPdmd8mL59byQ6Be6qU12UUdZ2rbHpEjXpq_NxUHLczLYWmwiRG4&#039; \
+  -H &#039;Content-Type: application/json&#039; -X POST -d &#039;{&quot;name&quot;:&quot;new client&quot;}&#039;</p>
+                                                                                                                                            </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response should contain json:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{&quot;code&quot;:401,&quot;message&quot;:&quot;Bad credentials&quot;}</p>
+                                                <b>Then</b> the response should contain json:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
+&quot;code&quot;: 400,<br />
+&quot;message&quot;: &quot;Validation Failed&quot;,<br />
+&quot;errors&quot;: {<br />
+    &quot;children&quot;: {<br />
+        &quot;name&quot;: {<br />
+            &quot;errors&quot;: [<br />
+                &quot;This client already exists.&quot;<br />
+            ]<br />
+        }<br />
+    }<br />
+}<br />
+}</p>
                                                                                                                                                                                                                                                                                                 </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>And</b> the response status code should be 400
+                                                                                                                                                                                                                                                                                                                                                </li>
                                                                                                                                                                                                                 </ul>
                                 </div>
                             </div>
@@ -293,7 +356,7 @@ I need to be able to signup and login</p>
                                            href="#scenario-1-4"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-4">
-                                            Scenario: failing registration, missing fields
+                                            Scenario: create new client with success
                                         </a>
 
                                         <div class="tags pull-right">
@@ -310,36 +373,34 @@ I need to be able to signup and login</p>
 | bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/users&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username      | mario |<br />
-| plainPassword | test  |</p>
+                                                <b>And</b> there are the following clients:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| createdBy | name       |<br />
+| bar       | new client |</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>Given</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
+                                                                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
+  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
+                                                                                                                                            </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/clients&quot; with json as table:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| name | client |</p>
                                                                                                                                                                                                                                                         <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;username&quot;:&quot;mario&quot;,&quot;plainPassword&quot;:&quot;test&quot;}&#039;</p>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/clients&#039; \
+  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjQyNjM2NDcsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2NDE3NzI0NyJ9.UkFVHKQsDWoKPxScRNMrLOX0arfjpc7LbFaajSeyPW4YbNsIjnYE9KJu1-B_aonc1_NPKegm8EOGkQ87AqYQiuICdn5sm4Wd6q3Trt_FUMmyorvVmSksut5aLr-S6gep5_l0EjeDstplO6L528wpWCX1HKD5xgzeo-9GWA3etBi5rUMp-dtEzh2ICeg-bdd9QCWp8yUr5yfTPhdFHUgsHEw206cvByp_V8yyDp-6VA1FzJWneY7561QHPQzVLYmDNB2yQfziwHYQDhxEYwF8QsqTHnMFFZekV7a92T4v1BTDjR0tvUcbsy_Of9AYkQ_L3Q0IyYrtaIDNBhDaOm9bYihW-vPYuUczCKh_-9t2qN3TKLZng4VbKncRCDUfQsBKZ1BymwRsbCGlRGkbb3dGnRdPs2rDNq90dottp1KmDrhSpIlqAB-QJHDsfWgPUqrIdHj11cNO3Bp2aA8IEA1nju-nMhfvVTZZcXyqiavrUkW0NWhLvpGr-zmFx6DPiQAfIhGOs3ilh0Cm0C3UP0xKmq1ibhpvLW8xSKPDGZ-WFVSCR6jSdS0qfUvhDqDDxMh78Po8B3x8du5nUCFuKWsuOx9-78e80pShzDyGcH1qr5p7InzOodJ1fqvtjNQwojOdkbJRjg0Cfbk7OcdYOnoFC2diIuwghgnH3Lrz3mY0Sv4&#039; \
+  -H &#039;Content-Type: application/json&#039; -X POST -d &#039;{&quot;name&quot;:&quot;client&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
                                                 <b>Then</b> the response should contain json:
                                                                                                                                                             <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
-&quot;code&quot;: 400,<br />
-&quot;message&quot;: &quot;Validation Failed&quot;,<br />
-&quot;errors&quot;: {<br />
-&quot;children&quot;: {<br />
-&quot;email&quot;: {<br />
-&quot;errors&quot;: [&quot;Please enter an email&quot;]<br />
-},<br />
-&quot;username&quot;: {},<br />
-&quot;plainPassword&quot;: {<br />
-&quot;children&quot;: {<br />
-	&quot;first&quot;: {},<br />
-	&quot;second&quot;: {}<br />
-}<br />
-}<br />
-}<br />
-}<br />
+&quot;id&quot;: &quot;*&quot;,<br />
+&quot;name&quot;: &quot;client&quot;,<br />
+&quot;created_by&quot;: &quot;bar&quot;<br />
 }</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response status code should be 400
+                                                <b>And</b> the response status code should be 201
                                                                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                 </ul>
                                 </div>
@@ -351,7 +412,7 @@ I need to be able to signup and login</p>
                                            href="#scenario-1-5"
                                            aria-expanded="true"
                                            aria-controls="scenario-1-5">
-                                            Scenario: failing registration, duplicate username
+                                            Scenario: edit a client with success
                                         </a>
 
                                         <div class="tags pull-right">
@@ -368,172 +429,34 @@ I need to be able to signup and login</p>
 | bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/users&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username             | bar            |<br />
-| plainPassword.first  | test           |<br />
-| plainPassword.second | test           |<br />
-| email                | mario@test.com |</p>
+                                                <b>And</b> there are the following clients:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| createdBy | name       |<br />
+| bar       | new client |</p>
+                                                                                                                                                                                                                                                                                                </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>And</b> I get a jtw token with &quot;bar&quot; and &quot;foo&quot;
+                                                                                                                                                                                                                                                                                                        <br>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
+  -d &#039;{&quot;_username&quot;:&quot;bar&quot;,&quot;_password&quot;:&quot;foo&quot;}&#039;</p>
+                                                                                                                                            </li>
+                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
+                                                <b>When</b> I send a &quot;PUT&quot; request to &quot;/api/v1/clients/{{ids.clients[&#039;new client&#039;]}}&quot; with json as table:
+                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| name | changed |</p>
                                                                                                                                                                                                                                                         <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;username&quot;:&quot;bar&quot;,&quot;plainPassword&quot;:{&quot;first&quot;:&quot;test&quot;,&quot;second&quot;:&quot;test&quot;},&quot;email&quot;:&quot;mario@test.com&quot;}&#039;</p>
+                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/clients/62&#039; \
+  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjQyNjM2NDcsInVzZXJuYW1lIjoiYmFyIiwiaWF0IjoiMTQ2NDE3NzI0NyJ9.UkFVHKQsDWoKPxScRNMrLOX0arfjpc7LbFaajSeyPW4YbNsIjnYE9KJu1-B_aonc1_NPKegm8EOGkQ87AqYQiuICdn5sm4Wd6q3Trt_FUMmyorvVmSksut5aLr-S6gep5_l0EjeDstplO6L528wpWCX1HKD5xgzeo-9GWA3etBi5rUMp-dtEzh2ICeg-bdd9QCWp8yUr5yfTPhdFHUgsHEw206cvByp_V8yyDp-6VA1FzJWneY7561QHPQzVLYmDNB2yQfziwHYQDhxEYwF8QsqTHnMFFZekV7a92T4v1BTDjR0tvUcbsy_Of9AYkQ_L3Q0IyYrtaIDNBhDaOm9bYihW-vPYuUczCKh_-9t2qN3TKLZng4VbKncRCDUfQsBKZ1BymwRsbCGlRGkbb3dGnRdPs2rDNq90dottp1KmDrhSpIlqAB-QJHDsfWgPUqrIdHj11cNO3Bp2aA8IEA1nju-nMhfvVTZZcXyqiavrUkW0NWhLvpGr-zmFx6DPiQAfIhGOs3ilh0Cm0C3UP0xKmq1ibhpvLW8xSKPDGZ-WFVSCR6jSdS0qfUvhDqDDxMh78Po8B3x8du5nUCFuKWsuOx9-78e80pShzDyGcH1qr5p7InzOodJ1fqvtjNQwojOdkbJRjg0Cfbk7OcdYOnoFC2diIuwghgnH3Lrz3mY0Sv4&#039; \
+  -H &#039;Content-Type: application/json&#039; -X PUT -d &#039;{&quot;name&quot;:&quot;changed&quot;}&#039;</p>
                                                                                                                                             </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
                                                 <b>Then</b> the response should contain json:
                                                                                                                                                             <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
-&quot;code&quot;: 400,<br />
-&quot;message&quot;: &quot;Validation Failed&quot;,<br />
-&quot;errors&quot;: {<br />
-&quot;children&quot;: {<br />
-&quot;email&quot;: {},<br />
-&quot;username&quot;: {<br />
-&quot;errors&quot;: [&quot;The username is already used&quot;]<br />
-},<br />
-&quot;plainPassword&quot;: {<br />
-&quot;children&quot;: {<br />
-	&quot;first&quot;: {},<br />
-	&quot;second&quot;: {}<br />
-}<br />
-}<br />
-}<br />
-}<br />
+&quot;id&quot;: &quot;*&quot;,<br />
+&quot;name&quot;: &quot;changed&quot;,<br />
+&quot;created_by&quot;: &quot;bar&quot;<br />
 }</p>
                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                         <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response status code should be 400
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                </ul>
-                                </div>
-                            </div>
-                                                    <div class="panel panel-default passed">
-                                <div class="panel-heading" role="tab">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#scenario-1-6"
-                                           aria-expanded="true"
-                                           aria-controls="scenario-1-6">
-                                            Scenario: failing registration, duplicate email
-                                        </a>
-
-                                        <div class="tags pull-right">
-                                                                                    </div>
-                                    </h4>
-                                </div>
-                                <div id="scenario-1-6" class="panel-collapse collapse in"
-                                     role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <ul class="list-group">
-                                                                                    <li class="list-group-item alert alert-success">
-                                                <b>Given</b> there are the following users:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username | email       | password | enabled | role      |<br />
-| bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
-                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/users&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username             | mario       |<br />
-| plainPassword.first  | test        |<br />
-| plainPassword.second | test        |<br />
-| email                | bar@foo.com |</p>
-                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;username&quot;:&quot;mario&quot;,&quot;plainPassword&quot;:{&quot;first&quot;:&quot;test&quot;,&quot;second&quot;:&quot;test&quot;},&quot;email&quot;:&quot;bar@foo.com&quot;}&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response should contain json:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{<br />
-&quot;code&quot;: 400,<br />
-&quot;message&quot;: &quot;Validation Failed&quot;,<br />
-&quot;errors&quot;: {<br />
-&quot;children&quot;: {<br />
-&quot;email&quot;: {<br />
-&quot;errors&quot;: [&quot;The email is already used&quot;]<br />
-},<br />
-&quot;username&quot;: {},<br />
-&quot;plainPassword&quot;: {<br />
-              &quot;children&quot;: {<br />
-                  &quot;first&quot;: {},<br />
-	&quot;second&quot;: {}<br />
-}<br />
-}<br />
-}<br />
-}<br />
-}</p>
-                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response status code should be 400
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                </ul>
-                                </div>
-                            </div>
-                                                    <div class="panel panel-default passed">
-                                <div class="panel-heading" role="tab">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion"
-                                           href="#scenario-1-7"
-                                           aria-expanded="true"
-                                           aria-controls="scenario-1-7">
-                                            Scenario: registration success and sign in
-                                        </a>
-
-                                        <div class="tags pull-right">
-                                                                                    </div>
-                                    </h4>
-                                </div>
-                                <div id="scenario-1-7" class="panel-collapse collapse in"
-                                     role="tabpanel"
-                                     aria-labelledby="headingOne">
-                                    <ul class="list-group">
-                                                                                    <li class="list-group-item alert alert-success">
-                                                <b>Given</b> there are the following users:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username | email       | password | enabled | role      |<br />
-| bar      | bar@foo.com | foo      | yes     | ROLE_USER |</p>
-                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I send a &quot;POST&quot; request to &quot;/api/v1/users&quot; with json as table:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">| username             | mario          |<br />
-| plainPassword.first  | test           |<br />
-| plainPassword.second | test           |<br />
-| email                | mario@test.com |</p>
-                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;username&quot;:&quot;mario&quot;,&quot;plainPassword&quot;:{&quot;first&quot;:&quot;test&quot;,&quot;second&quot;:&quot;test&quot;},&quot;email&quot;:&quot;mario@test.com&quot;}&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response status code should be 201
-                                                                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I get a jtw token with &quot;mario&quot; and &quot;test&quot;
-                                                                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;_username&quot;:&quot;mario&quot;,&quot;_password&quot;:&quot;test&quot;}&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> I send a &quot;GET&quot; request to &quot;/api/v1/users/current&quot;
-                                                                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users/current&#039; \
-  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjM5Mzc2ODEsInVzZXJuYW1lIjoibWFyaW8iLCJpYXQiOiIxNDYzODUxMjgxIn0.H4ti5GWPte_NYtBsdVJf5UETd4XvDjWGk7X13aeZkn-MP_wbzmsDh4IpCd61O3hGwzAgvP_rQ5rmWChHC4xVN1btUc0C4UUNHbHlYsDUf2bcV-Y48z-2sW5iWC612yMeTVrkwlULMDxA7wK1rzmQEBvQRacf8k27qVSvLbtSiNt2KgDCIVjE2pW8S8ybwZBoPcMj-521w-hvNKVi_6rDc2Sv2H1JZNCPLTJnB0bIT5xQKSyzTj5nnFiIRzr_YMOhESmAht-8TYg-DJo2tNHqJ-QlqcUS4Vh1qbOBJV_w1TRPBhGr37857QAWXE3eU7lQQmy0FBGGh5TGfoky9NYLvHA5-PBkAXDxBdoiofVjgw0PwejoD1u94V1PaEzMDeKdELKaEbw1I93cAmkvAik3Pw7MW9tRUXgpeiLbi8gJESkIveWxxy8gbk4djjIgO7ySQB512l18zHbTuQaZuIvFtfLjMfWq1k71woMbmzz4ysNVaWTifJG3mTECYuYxTXJftUWq5o0mua9UgOknEzBoy7vxAvD3BKxTuyarfP8KZOuCHtSKmbyUt4Oi8EJneXrfcdfEicfF8gfFdfHDBPLsyqU1Kay1P5xE7ctiM4Bx3sqclE27OcSFIz4RpimD0CAbS7vYlkSn8_2dKPTPjnQqYGqcyOvpZIPKpuIi0jpEcxY&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response should contain json:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{&quot;username&quot;:&quot;mario&quot;,&quot;email&quot;:&quot;mario@test.com&quot;,&quot;roles&quot;:[], &quot;enabled&quot;: 1}</p>
-                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>When</b> I get a jtw token with &quot;mario@test.com&quot; and &quot;test&quot;
-                                                                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;/api/login_check&#039; -H &#039;Content-Type: application/json&#039; -X POST \
-  -d &#039;{&quot;_username&quot;:&quot;mario@test.com&quot;,&quot;_password&quot;:&quot;test&quot;}&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> I send a &quot;GET&quot; request to &quot;/api/v1/users/current&quot;
-                                                                                                                                                                                                                                                                                                        <br>
-                                                    <p style="padding-left:2em ; color:black">| curl &#039;api/v1/users/current&#039; \
-  -H &#039;Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXUyJ9.eyJleHAiOjE0NjM5Mzc2ODEsInVzZXJuYW1lIjoibWFyaW8iLCJpYXQiOiIxNDYzODUxMjgxIn0.H4ti5GWPte_NYtBsdVJf5UETd4XvDjWGk7X13aeZkn-MP_wbzmsDh4IpCd61O3hGwzAgvP_rQ5rmWChHC4xVN1btUc0C4UUNHbHlYsDUf2bcV-Y48z-2sW5iWC612yMeTVrkwlULMDxA7wK1rzmQEBvQRacf8k27qVSvLbtSiNt2KgDCIVjE2pW8S8ybwZBoPcMj-521w-hvNKVi_6rDc2Sv2H1JZNCPLTJnB0bIT5xQKSyzTj5nnFiIRzr_YMOhESmAht-8TYg-DJo2tNHqJ-QlqcUS4Vh1qbOBJV_w1TRPBhGr37857QAWXE3eU7lQQmy0FBGGh5TGfoky9NYLvHA5-PBkAXDxBdoiofVjgw0PwejoD1u94V1PaEzMDeKdELKaEbw1I93cAmkvAik3Pw7MW9tRUXgpeiLbi8gJESkIveWxxy8gbk4djjIgO7ySQB512l18zHbTuQaZuIvFtfLjMfWq1k71woMbmzz4ysNVaWTifJG3mTECYuYxTXJftUWq5o0mua9UgOknEzBoy7vxAvD3BKxTuyarfP8KZOuCHtSKmbyUt4Oi8EJneXrfcdfEicfF8gfFdfHDBPLsyqU1Kay1P5xE7ctiM4Bx3sqclE27OcSFIz4RpimD0CAbS7vYlkSn8_2dKPTPjnQqYGqcyOvpZIPKpuIi0jpEcxY&#039;</p>
-                                                                                                                                            </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>Then</b> the response should contain json:
-                                                                                                                                                            <p style="padding-left:0.5em; overflow-x:scroll; white-space:nowrap; font-family:monospace">{&quot;username&quot;:&quot;mario&quot;,&quot;email&quot;:&quot;mario@test.com&quot;,&quot;roles&quot;:[], &quot;enabled&quot;: 1}</p>
-                                                                                                                                                                                                                                                                                                </li>
-                                                                                                                                                                                                                        <li class="list-group-item alert alert-success">
-                                                <b>And</b> the response should not contain &quot;password&quot;
+                                                <b>And</b> the response status code should be 200
                                                                                                                                                                                                                                                                                                                                                 </li>
                                                                                                                                                                                                                 </ul>
                                 </div>
@@ -572,7 +495,7 @@ I need to be able to signup and login</p>
             label: "Failed"
         },
         {
-            value: 7,
+            value: 5,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"
@@ -587,7 +510,7 @@ I need to be able to signup and login</p>
             label: "Failed"
         },
         {
-            value: 36,
+            value: 30,
             color: "#00a65a",
             highlight: "#5AD3D1",
             label: "Passed"

@@ -19,20 +19,24 @@ export function login(data, dispatch) {
 export function receiveLogin(response) {
     switch (response.status) {
         case 200:
+            localStorage.setItem('auth_token', response.data.token);
             return {
                 type: constants.USER_LOGIN_SUCCESS,
                 payload: {token: response.data.token}
             };
+            break;
         case 401:
             return {
                 type: constants.USER_LOGIN_FAILED,
                 payload: {error: response.data.message}
             };
+            break;
         default:
             return {
                 type: constants.USER_LOGIN_FAILED,
                 payload: {error: 'Unexpected error'}
             };
+            break;
     }
 }
 
@@ -64,22 +68,29 @@ export function receiveSignup(response, initialData, dispatch) {
                     password: initialData.plainPassword.first
                 }, dispatch);
             }
-
-
+            break;
         case 400:
             return {
                 type: constants.USER_SIGNUP_FAILED,
                 payload: {errors: reduceSymfonyErrors(response.data)}
             };
+            break;
         default:
             return {
                 type: constants.USER_SIGNUP_FAILED,
-                payload: {error: 'Unexpected error'}
+                payload: {
+                    errors: [{
+                        key: 'main',
+                        message: 'Unexpected error, please retry'
+                    }]
+                }
             };
+            break;
     }
 }
 
 export function logout(dispatch) {
+    localStorage.clear();
     dispatch({
         type: constants.USER_LOGGED_OUT
     });

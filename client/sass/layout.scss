@@ -2,9 +2,12 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import "~bootstrap-sass/assets/stylesheets/_bootstrap.scss";
 
 @import "_login.scss";
+@import "_activity_add.scss";
+@import "_activity_list.scss";
 
 body {
   padding-top: 50px;
+  color: #767676;
 }
 
 .main-container {
@@ -15,8 +18,4 @@ body {
       color: black;
   }
 
-}
-#search-box {
-    width: 300px;
-    margin-top: 20px;
 }

@@ -4,6 +4,7 @@
   "dependencies": {
     "expose": "^0.1.4",
     "jquery": "^2.2.4",
+    "jwt-decode": "^2.0.1",
     "lodash": "^4.13.1",
     "lodash.isplainobject": "^4.0.4",
     "react": "~0.14.2",

@@ -1,7 +1,12 @@
 import React from 'react'
+import ActivityAdd from './ActivityAdd'
+import ActivityList from './ActivityList'
 
-export default function Foo({ authData }) {
-  return (
-    <div>{`I am Tracker! Welcome ${authData.name}`}</div>
-  )
+export default function Tracker() {
+    return (
+        <div>
+            <ActivityAdd/>
+            <ActivityList/>
+        </div>
+    )
 }

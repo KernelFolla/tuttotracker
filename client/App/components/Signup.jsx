@@ -17,18 +17,6 @@ const mapDispatchToProps = (dispatch) => {
 
 
 class SignupContainer extends Component {
-
-    autologin = (nextProps) => {
-        if (nextProps.user.registrationSuccess) {
-            console.log('nextprops', nextProps);
-            nextProps.login({
-                username: this.refs.username.value,
-                password: this.refs.password1.value
-            });
-        }
-        return true;
-    }
-
     onClick = (e) => {
         e.preventDefault();
         this.props.signup({

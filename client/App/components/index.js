@@ -5,5 +5,7 @@ import Admin from './Admin'
 import Login from './Login'
 import Signup from './Signup'
 
+import ActivityAdd from './ActivityAdd'
+import ActivityList from './ActivityList'
 
-module.exports = { App, Home, Tracker, Admin, Login, Signup }
+module.exports = { App, Home, Tracker, Admin, Login, Signup, ActivityAdd, ActivityList }

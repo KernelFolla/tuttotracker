@@ -1,0 +1,18 @@
+.activity-list {
+  margin-top: 20px;
+}
+
+.activity-item {
+  position: relative;
+  margin-top: 5px;
+  padding: 15px 0;
+  background-color: #f7f7f7;
+  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  span {
+    margin: 5px;
+    padding: 5px;
+    font-size: 14px;
+  }
+}

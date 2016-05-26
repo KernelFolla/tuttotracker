@@ -20,21 +20,6 @@ class UserManager {
             data: data,
             callback: callback
         });
-        //     statusCode: {
-        //         401: (data) => console.log(data.responseJSON),
-        //         400: (data) => {
-        //             this.errors = reduceSymfonyErrors(data.responseJSON);
-        //             console.log(this.errors);
-        //             this.setState({'error': true});
-        //         },
-        //         201: (data) => {
-        //             console.log(data)
-        //         }
-        //     },
-        // });
-    }
-
-    logout(){
     }
 }
 

@@ -1,0 +1,71 @@
+.activity-add {
+  position: relative;
+  margin-top: 22px;
+  padding: 0;
+  background-color: #f7f7f7;
+  -moz-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+
+  .date-time-container {
+    padding: 0 1.5em
+  }
+
+  .date-time-container input {
+    color: #767676;
+    width: 7em
+  }
+  .button-container {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    padding: 0;
+
+    button {
+      padding: 0;
+      font-size: 22px;
+      width: 100%;
+      color: #fff;
+      height: 100%;
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 0;
+    }
+
+    button.started {
+      background: #4bc800
+    }
+
+    button.started:hover {
+      background: #3ca000
+    }
+    button.stop {
+      background-color: #f30c16;
+      border: 0;
+      border-radius: 0;
+      color: #fff;
+      cursor: pointer;
+      display: inline-block;
+      font-family: "Open Sans", sans-serif;
+      font-size: 1em;
+      -webkit-font-smoothing: antialiased;
+      font-weight: 600;
+      line-height: 1;
+      padding: .75em 1.5em;
+      text-decoration: none;
+      transition: background-color 150ms ease;
+      user-select: none;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+  }
+  [type=text] {
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 5px;
+    font-size: 20px;
+    box-shadow: 0 0 0;
+    border: 0
+  }
+
+}

@@ -40,16 +40,23 @@ function processResponse(resp) {
     };
 }
 
-export function callRest(data) {
+export function callRest(data, auth) {
+    let config = {
+        url: data.url,
+        type: 'json',
+        method: data.method,
+        contentType: 'application/json',
+        data: JSON.stringify(data.data),
+    }
+    if (auth) {
+        config.headers = {
+            Authorization: 'Bearer ' + localStorage.getItem('auth_token')
+        }
+    }
+    // console.log(config);
     try {
-        let r = reqwest({
-            url: data.url,
-            type: 'json',
-            method: data.method,
-            contentType: 'application/json',
-            data: JSON.stringify(data.data)
-        }).always(() => data.callback(processResponse(r.request)));
+        let r = reqwest(config).always(() => data.callback(processResponse(r.request)));
     } catch (e) {
-        console.log(e);
+        //console.log(e);
     }
 }
